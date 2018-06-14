@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-8">
+    <%= form.field_container :title do %>
+      <%= form.label :title %> <span class="required">*</span><br />
+      <%= form.text_field :title, class: 'fullwidth title' %>
+      <%= form.error_message_on :title %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-8">
+    <%= form.field_container :link do %>
+      <%= form.label :link %> <span class="required">*</span><br />
+      <%= form.text_field :link, class: 'fullwidth link' %>
+      <%= form.error_message_on :link %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-8">
+    <%= form.field_container :summary do %>
+      <%= form.label :summary %> <span class="required">*</span><br />
+      <%= form.text_area :summary, class: 'fullwidth summary' %>
+      <%= form.error_message_on :summary %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-8">
+    <%= form.field_container :image do %>
+      <%= form.label :image %> <span class="required">*</span><br />
+      <%= form.file_field :image, class: 'fullwidth image', accept: 'image/png,image/gif,image/jpeg' %>
+      <% if @banner.image.exists? %>
+        <%= label_tag :current_image %>
+        <div class="image_preview">
+          <%= link_to @banner.image.url, target: '_blank' do %>
+            <%= image_tag @banner.image.url(:thumb) %>
+          <% end %>
+        </div>
+      <% end %>
+      <%= form.error_message_on :image %>
+    <% end %>
+  </div>
+</div>

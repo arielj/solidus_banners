@@ -1,0 +1,16 @@
+<% content_for :page_title do %>
+   <%= Spree.t(:edit) %>: <%= @banner.title %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <li><%= button_link_to Spree.t(:back_to_banners_list), spree.admin_banners_url %></li>
+<% end %>
+
+<%= render "spree/shared/error_messages", :target => @banner %>
+
+<%= form_for [:admin, @banner] do |f| %>
+  <fieldset class="no-border-top">
+    <%= render :partial => f %>
+    <%= render :partial => 'spree/admin/shared/edit_resource_links' %>
+  </fieldset>
+<% end %>

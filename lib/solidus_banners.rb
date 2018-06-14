@@ -1,0 +1,7 @@
+require 'solidus_core'
+require 'solidus_support'
+require 'solidus_frontend'
+require 'solidus_backend'
+require 'deface'
+require 'solidus_banners/engine'
+require 'solidus_banners/solidus_banners_ability'
