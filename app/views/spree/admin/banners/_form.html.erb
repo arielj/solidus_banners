@@ -9,10 +9,20 @@
 </div>
 <div class="row">
   <div class="col-8">
+    <%- selected_type = form.object.product ? 'product_id' : 'link' -%>
+    <%= select_tag 'link_type', options_for_select([['Link','link'],['Producto','product_id']], selected_type) -%>
+
     <%= form.field_container :link do %>
-      <%= form.label :link %> <span class="required">*</span><br />
-      <%= form.text_field :link, class: 'fullwidth link' %>
+      <%= form.text_field :link, class: 'fullwidth link', placeholder: 'https://example.com/link-to-page' %>
       <%= form.error_message_on :link %>
+    <% end %>
+    <%= form.field_container :product_id do %>
+      <%- product_name = form.object.product ? form.object.product.name : '' -%>
+      <%= text_field_tag 'product_ac', product_name, class: 'fullwidth link', placeholder: 'Search a product' -%>
+      <%= form.hidden_field :product_id %>
+      <%= form.error_message_on :product_id %>
+      <div class='row products_autocomplete_results'>
+      </div>
     <% end %>
   </div>
 </div>

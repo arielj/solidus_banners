@@ -1,6 +1,36 @@
 class Spree::Banner < ActiveRecord::Base
-  validates :title, :link, :summary, presence: true
+  belongs_to :product, optional: true
+
+  validates :title, :summary, presence: true
+
+  validate :has_linked_content
 
   has_attached_file :image, styles: { resized: "900x320", thumb: '421x100' }
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
+
+  def link=(value)
+    if self[:link] != value
+      self[:link] = value
+      self[:product_id] = nil
+    end
+  end
+
+  def product_id=(value)
+    if self[:product_id] != value
+      self[:product_id] = value
+      self[:link] = ''
+    end
+  end
+
+  def content_link
+    product ? "products/#{product.slug}" : link
+  end
+
+private
+  def has_linked_content
+    if product.nil? and link.blank?
+      errors.add(:link, 'Se debe ingresar un link o un producto')
+      errors.add(:product_id, 'Se debe ingresar un producto o un link')
+    end
+  end
 end
