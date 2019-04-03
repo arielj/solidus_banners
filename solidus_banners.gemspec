@@ -35,4 +35,5 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<solidus>.freeze, ["> 1.0"])
       s.add_dependency(%q<deface>.freeze, ["~> 1"])
     end
+    s.add_dependency('papercrop')
   end

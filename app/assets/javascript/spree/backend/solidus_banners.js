@@ -32,6 +32,7 @@ $(document).on('ready', function(){
               $p_add = $('<a>').text('Seleccionar').addClass('button')
               $p_add.attr('data-id', product.id).attr('data-name', product.name);
               $p_add.on('click', function(e){
+                e.preventDefault();
                 $('#banner_product_id').val(this.dataset.id);
                 $('#product_ac').val(this.dataset.name);
                 $res.html('');
@@ -52,4 +53,73 @@ $(document).on('ready', function(){
       $('#product_ac').val('');
     })
   }
+
+  if ($('#crop_image').length) {
+    modal = document.getElementById('crop_banner_modal');
+    $('#crop_image').on('click', function(e){
+      e.preventDefault();
+      cropper = document.getElementById('cropper');
+
+      input = document.getElementById('banner_image');
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          cropper.src = e.target.result;
+          initCrop();
+        }
+        reader.readAsDataURL(input.files[0]);
+      } else if (cropper.src != '') {
+        cropper.setAttribute('src', cropper.src);
+        initCrop();
+      }
+      modal.classList.add('shown');
+    })
+
+    modal.querySelector('.accept.button').addEventListener('click', function(e) {
+      e.preventDefault();
+      closeCropModal();
+    })
+
+    modal.querySelector('.cancel.button').addEventListener('click', function(e) {
+      e.preventDefault();
+      clearCrop();
+      closeCropModal();
+    })
+
+    document.getElementById('banner_image').addEventListener('change', function(e) {
+      clearCrop();
+    })
+  }
 })
+
+
+function setCropprValues(value) {
+  document.getElementById('banner_image_crop_x').value = value.x;
+  document.getElementById('banner_image_crop_y').value = value.y;
+  document.getElementById('banner_image_crop_w').value = value.width;
+  document.getElementById('banner_image_crop_h').value = value.height;
+}
+
+function clearCrop() {
+  setCropprValues({x: '', y: '', width: '', height: ''});
+}
+
+function closeCropModal() {
+  modal.querySelector('.croppr-container').remove();
+  img = document.createElement('IMG');
+  img.id = 'cropper';
+  img.title = 'image to crop';
+  if (aux = document.getElementById('current_image_url')) {
+    img.src = aux.value;
+  }
+  modal.querySelector('.content').insertBefore(img, modal.querySelector('.buttons'));
+  modal.classList.remove('shown');
+}
+
+function initCrop() {
+  var cropperObject = new Croppr('#cropper', {
+    onCropEnd: setCropprValues,
+    startSize: [100,100,'%'],
+    aspectRatio: 5/16
+  });
+}

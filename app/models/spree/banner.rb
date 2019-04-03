@@ -7,16 +7,17 @@ class Spree::Banner < ActiveRecord::Base
 
   has_attached_file :image, styles: { resized: "900x320", thumb: '421x100' }
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
+  crop_attached_file :image
 
   def link=(value)
-    if self[:link] != value
+    if value.present? and self[:link] != value
       self[:link] = value
       self[:product_id] = nil
     end
   end
 
   def product_id=(value)
-    if self[:product_id] != value
+    if value.present? and self[:product_id] != value
       self[:product_id] = value
       self[:link] = ''
     end

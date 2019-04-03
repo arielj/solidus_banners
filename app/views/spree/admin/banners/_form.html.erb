@@ -43,12 +43,27 @@
       <% if @banner.image.exists? %>
         <%= label_tag :current_image %>
         <div class="image_preview">
+          <%= hidden_field_tag :current_image_url, @banner.image.url(:original) -%>
           <%= link_to @banner.image.url, target: '_blank' do %>
             <%= image_tag @banner.image.url(:thumb) %>
           <% end %>
         </div>
       <% end %>
+      <%= link_to 'Recortar', '', id: 'crop_image', class: 'button' %>
+      <%= form.hidden_field :image_crop_x -%>
+      <%= form.hidden_field :image_crop_y -%>
+      <%= form.hidden_field :image_crop_w -%>
+      <%= form.hidden_field :image_crop_h -%>
       <%= form.error_message_on :image %>
+      <div id='crop_banner_modal'>
+        <div class='content'>
+          <img id='cropper' title='image to crop' src='<%= @banner.image.url(:original) rescue '' -%>'/>
+          <div class='buttons'>
+            <a class='accept button'>Aceptar</a>
+            <a class='cancel button'>Cancelar</a>
+          </div>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>
