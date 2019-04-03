@@ -55,7 +55,7 @@ $(document).on('ready', function(){
   }
 
   if ($('#crop_image').length) {
-    modal = document.getElementById('crop_banner_modal');
+    cropBannerModal = document.getElementById('crop_banner_modal');
     $('#crop_image').on('click', function(e){
       e.preventDefault();
       cropper = document.getElementById('cropper');
@@ -72,15 +72,15 @@ $(document).on('ready', function(){
         cropper.setAttribute('src', cropper.src);
         initCrop();
       }
-      modal.classList.add('shown');
+      cropBannerModal.classList.add('shown');
     })
 
-    modal.querySelector('.accept.button').addEventListener('click', function(e) {
+    cropBannerModal.querySelector('.accept.button').addEventListener('click', function(e) {
       e.preventDefault();
       closeCropModal();
     })
 
-    modal.querySelector('.cancel.button').addEventListener('click', function(e) {
+    cropBannerModal.querySelector('.cancel.button').addEventListener('click', function(e) {
       e.preventDefault();
       clearCrop();
       closeCropModal();
@@ -105,15 +105,15 @@ function clearCrop() {
 }
 
 function closeCropModal() {
-  modal.querySelector('.croppr-container').remove();
+  cropBannerModal.querySelector('.croppr-container').remove();
   img = document.createElement('IMG');
   img.id = 'cropper';
   img.title = 'image to crop';
   if (aux = document.getElementById('current_image_url')) {
     img.src = aux.value;
   }
-  modal.querySelector('.content').insertBefore(img, modal.querySelector('.buttons'));
-  modal.classList.remove('shown');
+  cropBannerModal.querySelector('.content').insertBefore(img, cropBannerModal.querySelector('.buttons'));
+  cropBannerModal.classList.remove('shown');
 }
 
 function initCrop() {
