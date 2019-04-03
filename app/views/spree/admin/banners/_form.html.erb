@@ -41,7 +41,7 @@
       <%= form.label :image %> <span class="required">*</span><br />
       <%= form.file_field :image, class: 'fullwidth image', accept: 'image/png,image/gif,image/jpeg' %>
       <% if @banner.image.exists? %>
-        <%= label_tag :current_image %>
+        <%= label_tag :current_image, t('current_image') %>
         <div class="image_preview">
           <%= hidden_field_tag :current_image_url, @banner.image.url(:original) -%>
           <%= link_to @banner.image.url, target: '_blank' do %>
