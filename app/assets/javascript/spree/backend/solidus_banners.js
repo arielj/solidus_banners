@@ -55,6 +55,7 @@ $(document).on('ready', function(){
   }
 
   if ($('#crop_image').length) {
+    bannerImageAspectRatio = document.getElementById('crop_image').dataset.aspectRatio;
     cropBannerModal = document.getElementById('crop_banner_modal');
     $('#crop_image').on('click', function(e){
       e.preventDefault();
@@ -117,9 +118,10 @@ function closeCropModal() {
 }
 
 function initCrop() {
+  aspect = bannerImageAspectRatio == '' ? 5/16 : parseFloat(bannerImageAspectRatio);
   var cropperObject = new Croppr('#cropper', {
     onCropEnd: setCropprValues,
     startSize: [100,100,'%'],
-    aspectRatio: 5/16
+    aspectRatio: aspect
   });
 }

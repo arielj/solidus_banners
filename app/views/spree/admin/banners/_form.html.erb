@@ -49,7 +49,8 @@
           <% end %>
         </div>
       <% end %>
-      <%= link_to 'Recortar', '', id: 'crop_image', class: 'button' %>
+      <%- aspect_ratio = CAMPAIGN_IMAGE_ASPECT_RATIO rescue '' -%>
+      <%= link_to 'Recortar', '', id: 'crop_image', class: 'button', 'data-aspect-ratio' => aspect_ratio %>
       <%= form.hidden_field :image_crop_x -%>
       <%= form.hidden_field :image_crop_y -%>
       <%= form.hidden_field :image_crop_w -%>
