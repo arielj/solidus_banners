@@ -5,7 +5,7 @@ class Spree::Banner < ActiveRecord::Base
 
   validate :has_linked_content
 
-  has_attached_file :image, styles: { resized: "900x320", thumb: '421x100' }
+  has_attached_file :image, styles: (BANNER_IMAGE_STYLES rescue {})
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   crop_attached_file :image
 
