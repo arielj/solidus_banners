@@ -9,8 +9,8 @@ module SolidusBanners
       end
 
       def add_stylesheets
-        append_file 'vendor/assets/stylesheets/spree/backend/all.js', "*= require spree/backend/croppr\n"
-        append_file 'vendor/assets/stylesheets/spree/backend/all.js', "*= require spree/backend/solidus_banners\n"
+        append_file 'vendor/assets/stylesheets/spree/backend/all.css', "*= require spree/backend/croppr\n"
+        append_file 'vendor/assets/stylesheets/spree/backend/all.css', "*= require spree/backend/solidus_banners\n"
       end
 
       def add_migrations
