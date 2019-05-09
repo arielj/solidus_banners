@@ -30,3 +30,12 @@
 #crop_banner_modal .buttons {
   margin-top: 2rem;
 }
+#crop_image {
+  margin-top: 1rem;
+}
+#banner_image{
+  margin-bottom: 1rem;
+}
+.croppr-container img {
+  max-height: 80vh;
+}
