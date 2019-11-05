@@ -18,7 +18,7 @@ $(document).on('ready', function(){
         ajx = false
       }
       if (q.length > 2) {
-        ajx = $.getJSON(action+"/search_products?q="+q, '', function (products) {
+        ajx = $.getJSON("/admin/banners/search_products?q="+q, '', function (products) {
           ajx = false
 
           $res = $('.products_autocomplete_results');
