@@ -5,11 +5,11 @@ class Spree::Banner < ActiveRecord::Base
 
   validate :has_linked_content
 
-  has_attached_file :image, styles: (BANNER_IMAGE_STYLES rescue {})
+  has_attached_file :image, styles: (BANNER_IMAGE_STYLES[:image] rescue {})
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   crop_attached_file :image
 
-  has_attached_file :mobile_image, styles: (BANNER_MOBILE_IMAGE_STYLES rescue {})
+  has_attached_file :mobile_image, styles: (BANNER_IMAGE_STYLES[:mobile_image] rescue {})
   validates_attachment_content_type :mobile_image, content_type: /\Aimage\/.*\z/
   crop_attached_file :mobile_image
 

@@ -50,7 +50,7 @@
             <% end %>
           </div>
         <% end %>
-        <%- aspect_ratio = BANNER_MOBILE_IMAGE_ASPECT_RATIO rescue '' -%>
+        <%- aspect_ratio = BANNER_MOBILE_IMAGE_ASPECT_RATIO[attch] rescue '' -%>
         <%= link_to 'Recortar', '', id: "crop_#{attch}", class: 'link_to_crop button', 'data-aspect-ratio' => aspect_ratio %>
         <%= form.hidden_field "#{attch}_crop_x", class: 'crop_x' -%>
         <%= form.hidden_field "#{attch}_crop_y", class: 'crop_y' -%>
