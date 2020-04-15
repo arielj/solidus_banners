@@ -54,73 +54,80 @@ $(document).on('ready', function(){
     })
   }
 
-  if ($('#crop_image').length) {
-    bannerImageAspectRatio = document.getElementById('crop_image').dataset.aspectRatio;
-    cropBannerModal = document.getElementById('crop_banner_modal');
-    $('#crop_image').on('click', function(e){
-      e.preventDefault();
-      cropper = document.getElementById('cropper');
+  document.querySelectorAll('#crop_image, #crop_mobile_image').forEach( crp => {
+    let parent = crp.parentElement
+    let cropBannerModal = parent.querySelector('.crop_banner_modal');
+    let input = parent.querySelector('input[type=file]');
 
-      input = document.getElementById('banner_image');
+    crp.addEventListener('click', function(e){
+      e.preventDefault();
+      let cropper = cropBannerModal.querySelector('img');
+
       if (input.files && input.files[0]) {
-        var reader = new FileReader();
+        let reader = new FileReader();
         reader.onload = function(e) {
           cropper.src = e.target.result;
-          initCrop();
+          initCrop(parent);
         }
         reader.readAsDataURL(input.files[0]);
       } else if (cropper.src != '') {
         cropper.setAttribute('src', cropper.src);
-        initCrop();
+        initCrop(parent);
       }
       cropBannerModal.classList.add('shown');
     })
 
     cropBannerModal.querySelector('.accept.button').addEventListener('click', function(e) {
       e.preventDefault();
-      closeCropModal();
+      closeCropModal(parent);
     })
 
     cropBannerModal.querySelector('.cancel.button').addEventListener('click', function(e) {
       e.preventDefault();
-      clearCrop();
-      closeCropModal();
+      clearCrop(parent);
+      closeCropModal(parent);
     })
 
-    document.getElementById('banner_image').addEventListener('change', function(e) {
-      clearCrop();
+    input.addEventListener('change', function(e) {
+      clearCrop(parent);
     })
-  }
+  })
 })
 
 
-function setCropprValues(value) {
-  document.getElementById('banner_image_crop_x').value = value.x;
-  document.getElementById('banner_image_crop_y').value = value.y;
-  document.getElementById('banner_image_crop_w').value = value.width;
-  document.getElementById('banner_image_crop_h').value = value.height;
+function setCropprValues(value, parent) {
+  parent.querySelector('.crop_x').value = value.x;
+  parent.querySelector('.crop_y').value = value.y;
+  parent.querySelector('.crop_w').value = value.width;
+  parent.querySelector('.crop_h').value = value.height;
 }
 
-function clearCrop() {
-  setCropprValues({x: '', y: '', width: '', height: ''});
+function clearCrop(parent) {
+  setCropprValues({x: '', y: '', width: '', height: ''}, parent);
 }
 
-function closeCropModal() {
+function closeCropModal(parent) {
+  let cropBannerModal = parent.querySelector('.crop_banner_modal')
   cropBannerModal.querySelector('.croppr-container').remove();
   img = document.createElement('IMG');
   img.id = 'cropper';
   img.title = 'image to crop';
-  if (aux = document.getElementById('current_image_url')) {
+  if (aux = parent.querySelector('.image_preview input[type=hidden]')) {
     img.src = aux.value;
   }
   cropBannerModal.querySelector('.content').insertBefore(img, cropBannerModal.querySelector('.buttons'));
   cropBannerModal.classList.remove('shown');
 }
 
-function initCrop() {
-  aspect = bannerImageAspectRatio == '' ? 5/16 : parseFloat(bannerImageAspectRatio);
-  var cropperObject = new Croppr('#cropper', {
-    onCropEnd: setCropprValues,
+function initCrop(parent, ) {
+  let onCropEnd = function(values) {
+    setCropprValues(values, parent)
+  }
+
+  let bannerImageAspectRatio = parent.querySelector('input[type=file]').dataset.aspectRatio;
+  let aspect = bannerImageAspectRatio == '' ? 5/16 : parseFloat(bannerImageAspectRatio);
+  new Croppr(parent.querySelector('.crop_banner_modal img'), {
+    onCropEnd: onCropEnd,
     startSize: [100,100,'%'],
     aspectRatio: aspect
   });

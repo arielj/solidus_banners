@@ -9,6 +9,10 @@ class Spree::Banner < ActiveRecord::Base
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
   crop_attached_file :image
 
+  has_attached_file :mobile_image, styles: (BANNER_MOBILE_IMAGE_STYLES rescue {})
+  validates_attachment_content_type :mobile_image, content_type: /\Aimage\/.*\z/
+  crop_attached_file :mobile_image
+
   def link=(value)
     if value.present? and self[:link] != value
       self[:link] = value

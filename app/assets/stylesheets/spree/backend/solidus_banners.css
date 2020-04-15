@@ -1,4 +1,4 @@
-#crop_banner_modal {
+.crop_banner_modal {
   position: fixed;
   top: 0;
   right: 0;
@@ -11,10 +11,10 @@
   background-color: rgba(0,0,0,.6);
   z-index: 10000;
 }
-#crop_banner_modal.shown {
+.crop_banner_modal.shown {
   display: flex;
 }
-#crop_banner_modal .content {
+.crop_banner_modal .content {
   width: 80%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -27,13 +27,13 @@
   flex-direction: column;
   align-items: center;
 }
-#crop_banner_modal .buttons {
+.crop_banner_modal .buttons {
   margin-top: 2rem;
 }
-#crop_image {
+#crop_image, #crop_mobile_image {
   margin-top: 1rem;
 }
-#banner_image{
+#banner_image, #banner_mobile_image {
   margin-bottom: 1rem;
 }
 .croppr-container img {

@@ -35,36 +35,38 @@
     <% end %>
   </div>
 </div>
-<div class="row">
-  <div class="col-8">
-    <%= form.field_container :image do %>
-      <%= form.label :image %> <span class="required">*</span><br />
-      <%= form.file_field :image, class: 'fullwidth image', accept: 'image/png,image/gif,image/jpeg' %>
-      <% if @banner.image.exists? %>
-        <%= label_tag :current_image, t('current_image') %>
-        <div class="image_preview">
-          <%= hidden_field_tag :current_image_url, @banner.image.url(:original) -%>
-          <%= link_to @banner.image.url, target: '_blank' do %>
-            <%= image_tag @banner.image.url(:thumb) %>
-          <% end %>
-        </div>
-      <% end %>
-      <%- aspect_ratio = BANNER_IMAGE_ASPECT_RATIO rescue '' -%>
-      <%= link_to 'Recortar', '', id: 'crop_image', class: 'button', 'data-aspect-ratio' => aspect_ratio %>
-      <%= form.hidden_field :image_crop_x -%>
-      <%= form.hidden_field :image_crop_y -%>
-      <%= form.hidden_field :image_crop_w -%>
-      <%= form.hidden_field :image_crop_h -%>
-      <%= form.error_message_on :image %>
-      <div id='crop_banner_modal'>
-        <div class='content'>
-          <img id='cropper' title='image to crop' src='<%= @banner.image.url(:original) rescue '' -%>'/>
-          <div class='buttons'>
-            <a class='accept button'>Aceptar</a>
-            <a class='cancel button'>Cancelar</a>
+<% %i[image mobile_image].each do |attch| %>
+  <div class="row">
+    <div class="col-8">
+      <%= form.field_container attch do %>
+        <%= form.label attch %> <span class="required">*</span><br />
+        <%= form.file_field attch, class: 'fullwidth image', accept: 'image/png,image/gif,image/jpeg' %>
+        <% if @banner.send(attch).exists? %>
+          <%= label_tag "current_#{attch}", t('current_image') %>
+          <div class="image_preview">
+            <%= hidden_field_tag "current_#{attch}_url", @banner.send(attch).url(:original) -%>
+            <%= link_to @banner.send(attch).url, target: '_blank' do %>
+              <%= image_tag @banner.send(attch).url(:thumb) %>
+            <% end %>
+          </div>
+        <% end %>
+        <%- aspect_ratio = BANNER_MOBILE_IMAGE_ASPECT_RATIO rescue '' -%>
+        <%= link_to 'Recortar', '', id: "crop_#{attch}", class: 'link_to_crop button', 'data-aspect-ratio' => aspect_ratio %>
+        <%= form.hidden_field "#{attch}_crop_x", class: 'crop_x' -%>
+        <%= form.hidden_field "#{attch}_crop_y", class: 'crop_y' -%>
+        <%= form.hidden_field "#{attch}_crop_w", class: 'crop_w' -%>
+        <%= form.hidden_field "#{attch}_crop_h", class: 'crop_h' -%>
+        <%= form.error_message_on attch %>
+        <div class="crop_banner_modal">
+          <div class='content'>
+            <img id='cropper_<%= attch %>' title='image to crop' src='<%= @banner.send(attch).url(:original) rescue '' -%>'/>
+            <div class='buttons'>
+              <a class='accept button'>Aceptar</a>
+              <a class='cancel button'>Cancelar</a>
+            </div>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>
