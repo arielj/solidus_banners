@@ -6,7 +6,6 @@ class Spree::Admin::BannersController < Spree::Admin::ResourceController
         slug: p.slug,
         name: p.name,
         image_url: p.display_image.attachment.url,
-        mobile_image_url: p.display_mobile_image.attachment.url,
         id: p.id
       }
     end.to_json
