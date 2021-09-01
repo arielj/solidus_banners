@@ -1,4 +1,7 @@
 class Spree::Banner < ActiveRecord::Base
+  acts_as_list
+  default_scope -> { order(position: :asc) }
+
   belongs_to :product, optional: true
 
   validates :title, :summary, presence: true

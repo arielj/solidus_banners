@@ -7,8 +7,9 @@
 <% end %>
 
 <% if @banners.any? %>
-  <table class="index">
+  <table class="index sortable" data-sortable-link="/admin/banners/update_positions">
     <colgroup>
+      <col style="width: 20px">
       <col style="width: 35%">
       <col style="width: 15%">
       <col style="width: 15%">
@@ -17,6 +18,7 @@
     </colgroup>
     <thead>
       <tr>
+        <th></th>
         <th class="title"><%= t(:title, scope: 'activerecord.attributes.spree/banner') %></th>
         <th class="link"><%= t(:link, scope: 'activerecord.attributes.spree/banner') %></th>
         <th class="actions"></th>
@@ -26,6 +28,9 @@
     <tbody>
       <% @banners.each do |banner| %>
         <tr class="<%= cycle('odd', 'even') %>" id="<%= spree_dom_id banner %>">
+          <td>
+            <span class="handle"></span>
+          </td>
           <td><%= banner.title %></td>
           <td><%= banner.content_link %></td>
           <td class="actions">

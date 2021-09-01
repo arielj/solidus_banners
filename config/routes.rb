@@ -3,6 +3,7 @@ Spree::Core::Engine.routes.draw do
     resources :banners do
       collection do
         get :search_products
+        post :update_positions
       end
     end
   end
